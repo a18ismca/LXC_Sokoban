@@ -1,5 +1,13 @@
 tileMap01.mapGrid[3][5];
 
+var x = 0;
+var y = 0;
+
+function Build(){
+    tileMap01.mapGrid[0][0] = document.getElementById("x0 y0").innerHTML;
+}
+
+
 function BuildMap(){
 
     // loop through something
