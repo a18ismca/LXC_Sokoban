@@ -72,7 +72,7 @@ function movePlayer(direction){
     // Nuvarande position
     let getCoords = currentPlayerPos.split(",");
 
-    // Övre granne
+    /* Övre granne
 
     let getUpperX = getCoords[0];
 
@@ -103,7 +103,7 @@ function movePlayer(direction){
 
     let getRightY = getCoords[1]
 
-    let getRightCoords = getRightX + "," + getRightY;
+    let getRightCoords = getRightX + "," + getRightY; */
 
 
    
@@ -128,13 +128,15 @@ function movePlayer(direction){
 
     }*/
 
-    let targetX = Math.floor(getCoords[0]) + Math.floor(xOffset);
 
+    // Player coordinates where we movit next
+
+    let targetX = Math.floor(getCoords[0]) + Math.floor(xOffset);
 
     let targetY = Math.floor(getCoords[1]) + Math.floor(yOffset);
 
-
     let newCharCoords = targetX + "," + targetY;
+
     // newCoords
 
     //div.id = newCoords;
@@ -142,21 +144,51 @@ function movePlayer(direction){
 
     let divTarget = document.getElementById(newCharCoords);
 
+    if (divTarget.classList.contains(Tiles.Wall)){
+        return;
+    }
+    if (divTarget.classList.contains(Entities.Block)){
+        let afterBoxDivX = Math.floor(getCoords[0]) + Math.floor(xOffset * 2);
 
-    // CLASS LIST!
-    if (!divTarget.classList.contains(Tiles.Wall)){
+        let afterBoxDivY = Math.floor(getCoords[1]) + Math.floor(yOffset * 2);
+    
+        let afterBoxDivID = afterBoxDivX + "," + afterBoxDivY;
+
+        let afterBoxDiv = document.getElementById(afterBoxDivID);
+
+        if(afterBoxDiv.classList.contains(Entities.Block) || afterBoxDiv.classList.contains(Tiles.Wall)){
+            return;
+        } 
+        
+        else{
+            // move the box
+            divTarget.classList.remove(Entities.Block);
+
+            afterBoxDiv.classList.add(Entities.Block);
+
+        }
+
+        
+
+    }
+
+
     div.classList.replace(Entities.Character, Tiles.Space);
-
 
     divTarget.classList.replace(Tiles.Space, Entities.Character);
 
-    if(divTarget.classList.contains(Entities.Block) && xOffset == -1){
-       
-        // alert("Block to the left")
+
+}
+
+
+    // CLASS LIST!
+    /*if (divTarget.classList.contains(Tiles.Wall)){
 
         let movingBlockCods = (targetX - 1) + "," + targetY;
 
         let checkBlockAfterBlock = (targetX - 2) + "," + targetY;
+
+        //alert("Block to the left: " + movingBlockCods);
 
         //divTarget.classList.replace(Entities.Block, Tiles.Space);
 
@@ -164,12 +196,39 @@ function movePlayer(direction){
 
         let checkBlocksAround = document.getElementById(checkBlockAfterBlock);
 
-        if(!newTarget.classList.contains(Entities.Block)){
+        if(newTarget.classList.contains(Entities.Block) || checkBlocksAround.classList.contains(Tiles.Wall)){
+            alert("You have two blocks to the left")
+        }
+        //if(!(newTarget.classList.contains(Entities.Block) && checkBlocksAround.classList.contains(Tiles.Wall))){
+        div.classList.replace(Entities.Character, Tiles.Space);
+
+        divTarget.classList.replace(Tiles.Space, Entities.Character);
+
+        
+
+
+    
+
+    if(divTarget.classList.contains(Entities.Block) && xOffset == -1 && !(newTarget.classList.contains(Entities.Block) && checkBlocksAround.classList.contains(Tiles.Wall))){
+       
+        // alert("Block to the left")
+
+       
+
+        //divTarget.classList.replace(Entities.Block, Tiles.Space);
+
+        let newTarget = document.getElementById(movingBlockCods);
+
+        let checkBlocksAround = document.getElementById(checkBlockAfterBlock);
+
+        //if(!newTarget.classList.contains(Entities.Block)){
+            
             newTarget.classList.replace(Tiles.Space, Entities.Block);
          
             divTarget.classList.replace(Entities.Block, Entities.Character);
-            }
+          //  }
         }
+    //}
 
         /*if(newTarget.classList.contains(Entities.Block)){
     
@@ -183,7 +242,7 @@ function movePlayer(direction){
         
         // alert("Where the block should be: " + anotherCods); 
         
-    }
+    
     
     /*else if(divTarget.classList.contains(Entities.Block) && xOffset == 1){
         // alert("Block to the left")
@@ -238,9 +297,9 @@ function movePlayer(direction){
         divTarget.classList.replace(Entities.Block, Entities.Character);
 
         // alert("Where the block should be: " + anotherCods);
-    }*/
+    }
 
-    } 
+    } */
 
 
     // Old pos
