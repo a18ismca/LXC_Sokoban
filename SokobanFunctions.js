@@ -134,13 +134,13 @@ function movePlayer(direction){
     let targetY = Math.floor(getCoords[1]) + Math.floor(yOffset);
 
 
-    let newCoords = targetX + "," + targetY;
- 
+    let newCharCoords = targetX + "," + targetY;
+    // newCoords
 
     //div.id = newCoords;
 
 
-    let divTarget = document.getElementById(newCoords);
+    let divTarget = document.getElementById(newCharCoords);
 
 
     // CLASS LIST!
@@ -154,29 +154,38 @@ function movePlayer(direction){
        
         // alert("Block to the left")
 
-        let anotherCods = (targetX - 1) + "," + targetY;
+        let movingBlockCods = (targetX - 1) + "," + targetY;
 
         let checkBlockAfterBlock = (targetX - 2) + "," + targetY;
 
         //divTarget.classList.replace(Entities.Block, Tiles.Space);
 
-        let newTarget = document.getElementById(anotherCods);
+        let newTarget = document.getElementById(movingBlockCods);
 
-        if(newTarget.classList.contains(Entities.Block)){
-            
-        } else{
+        let checkBlocksAround = document.getElementById(checkBlockAfterBlock);
 
-
-            
-        newTarget.classList.replace(Tiles.Space, Entities.Block);
-
-        divTarget.classList.replace(Entities.Block, Entities.Character);
+        if(!newTarget.classList.contains(Entities.Block)){
+            newTarget.classList.replace(Tiles.Space, Entities.Block);
+         
+            divTarget.classList.replace(Entities.Block, Entities.Character);
+            }
         }
+
+        /*if(newTarget.classList.contains(Entities.Block)){
+    
+        } else{}
+*/
+
+        //if(!)
+        //newTarget.classList.replace(Tiles.Space, Entities.Block);
+
+        //divTarget.classList.replace(Entities.Block, Entities.Character);
+        
         // alert("Where the block should be: " + anotherCods); 
         
     }
     
-    else if(divTarget.classList.contains(Entities.Block) && xOffset == 1){
+    /*else if(divTarget.classList.contains(Entities.Block) && xOffset == 1){
         // alert("Block to the left")
 
         let anotherCods = (Math.floor(targetX) + Math.floor(1)) + "," + targetY;
@@ -229,7 +238,7 @@ function movePlayer(direction){
         divTarget.classList.replace(Entities.Block, Entities.Character);
 
         // alert("Where the block should be: " + anotherCods);
-    }
+    }*/
 
     } 
 
@@ -242,7 +251,7 @@ function movePlayer(direction){
    
 
 
-}
+
 
 function ListenForUser(){};
 
