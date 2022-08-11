@@ -150,11 +150,13 @@ function movePlayer(direction){
 
     divTarget.classList.replace(Tiles.Space, Entities.Character);
 
-    if(divTarget.classList.contains(Entities.Block)){
+    if(divTarget.classList.contains(Entities.Block) && xOffset == -1){
        
         // alert("Block to the left")
 
         let anotherCods = (targetX - 1) + "," + targetY;
+
+        let checkBlockAfterBlock = (targetX - 2) + "," + targetY;
 
         //divTarget.classList.replace(Entities.Block, Tiles.Space);
 
@@ -174,10 +176,12 @@ function movePlayer(direction){
         
     }
     
-    else if(divTarget.classList.contains(Entities.Block)){
+    else if(divTarget.classList.contains(Entities.Block) && xOffset == 1){
         // alert("Block to the left")
 
         let anotherCods = (Math.floor(targetX) + Math.floor(1)) + "," + targetY;
+
+        let checkBlockAfterBlock = (Math.floor(targetX) + Math.floor(2)) + "," + targetY;
 
         //divTarget.classList.replace(Entities.Block, Tiles.Space);
 
@@ -192,10 +196,12 @@ function movePlayer(direction){
         
     }
     
-    else if(divTarget.classList.contains(Entities.Block)){
+    else if(divTarget.classList.contains(Entities.Block) && yOffset == -1){
        // alert("Block to the left")
 
        let anotherCods = targetX + "," + (targetY - 1);
+
+       let checkBlockAfterBlock = targetX + "," + (targetY - 2);
 
        //divTarget.classList.replace(Entities.Block, Tiles.Space);
 
@@ -207,10 +213,12 @@ function movePlayer(direction){
 
        // alert("Where the block should be: " + anotherCods);
     }
-    else if(divTarget.classList.contains(Entities.Block)){
+    else if(divTarget.classList.contains(Entities.Block) && yOffset == 1){
         // alert("Block to the left")
 
         let anotherCods = targetX + "," + (Math.floor(targetY) + Math.floor(1));
+
+        let checkBlockAfterBlock = targetX + "," + (Math.floor(targetY) + Math.floor(2));
 
         //divTarget.classList.replace(Entities.Block, Tiles.Space);
 
