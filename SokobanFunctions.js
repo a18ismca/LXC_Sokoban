@@ -60,25 +60,73 @@ function movePlayer(direction){
 
     let yOffset = 0;
 
-    if(direction == "ArrowLeft"){
-        xOffset = -1;
-    } else if(direction == "ArrowRight"){
-        xOffset += 1;
-    } else if(direction == "ArrowUp"){
-        yOffset = -1;
-    } else if(direction == "ArrowDown"){
-        yOffset += 1;
-    }
-
     // leta efter playerns plats
 
     let div = document.getElementsByClassName(Entities.Character)[0];
 
-    let currentPlayerPos = div.id;
-    
 
+   
+    let currentPlayerPos = div.id;
+
+
+    // Nuvarande position
     let getCoords = currentPlayerPos.split(",");
 
+    // Övre granne
+
+    let getUpperX = getCoords[0];
+
+    let getUpperY = Math.floor(getCoords[1]) - 1;
+
+    let getUpperCoords = getUpperX + "," + getUpperY;
+
+    // Nedre granne
+
+    let getLowerX = getCoords[0];
+
+    let getLowerY = Math.floor(getCoords[1]) + Math.floor(1);
+
+    let getLowerCoords = getLowerX + "," + getLowerY;
+
+
+    // Vänster granne
+
+    let getLeftX = getCoords[0] - 1;
+
+    let getLeftY = getCoords[1];
+
+    let getLeftCoords = getLeftX + "," + getLeftY;
+
+    // Höger granne
+    
+    let getRightX = Math.floor(getCoords[0]) + Math.floor(1);
+
+    let getRightY = getCoords[1]
+
+    let getRightCoords = getRightX + "," + getRightY;
+
+
+   
+    if(direction == "ArrowLeft"){
+        xOffset = -1;
+    } 
+    
+    else if(direction == "ArrowRight"){
+        xOffset += 1;
+    } 
+    
+    else if(direction == "ArrowUp"){
+        yOffset = -1;
+    } 
+    
+    else if(direction == "ArrowDown"){
+        yOffset += 1;
+    }
+
+
+    /*if (getLeftCoords == Tiles.Wall || getRightCoords == Tiles.Wall || getUpperCoords == Tiles.Wall || getLowerCoords == Tiles.Wall){
+
+    }*/
 
     let targetX = Math.floor(getCoords[0]) + Math.floor(xOffset);
 
@@ -87,7 +135,7 @@ function movePlayer(direction){
 
 
     let newCoords = targetX + "," + targetY;
-
+ 
 
     //div.id = newCoords;
 
@@ -95,29 +143,95 @@ function movePlayer(direction){
     let divTarget = document.getElementById(newCoords);
 
 
+    // CLASS LIST!
+    if (!divTarget.classList.contains(Tiles.Wall)){
     div.classList.replace(Entities.Character, Tiles.Space);
 
 
     divTarget.classList.replace(Tiles.Space, Entities.Character);
 
+    if(divTarget.classList.contains(Entities.Block)){
+       
+        // alert("Block to the left")
 
-    alert(currentPlayerPos);
-    alert(div.id);
+        let anotherCods = (targetX - 1) + "," + targetY;
+
+        //divTarget.classList.replace(Entities.Block, Tiles.Space);
+
+        let newTarget = document.getElementById(anotherCods);
+
+        if(newTarget.classList.contains(Entities.Block)){
+            
+        } else{
+
+
+            
+        newTarget.classList.replace(Tiles.Space, Entities.Block);
+
+        divTarget.classList.replace(Entities.Block, Entities.Character);
+        }
+        // alert("Where the block should be: " + anotherCods); 
+        
+    }
+    
+    else if(divTarget.classList.contains(Entities.Block)){
+        // alert("Block to the left")
+
+        let anotherCods = (Math.floor(targetX) + Math.floor(1)) + "," + targetY;
+
+        //divTarget.classList.replace(Entities.Block, Tiles.Space);
+
+        let newTarget = document.getElementById(anotherCods);
+
+        newTarget.classList.replace(Tiles.Space, Entities.Block);
+
+        divTarget.classList.replace(Entities.Block, Entities.Character);
+
+        // alert("Where the block should be: " + anotherCods);
+
+        
+    }
+    
+    else if(divTarget.classList.contains(Entities.Block)){
+       // alert("Block to the left")
+
+       let anotherCods = targetX + "," + (targetY - 1);
+
+       //divTarget.classList.replace(Entities.Block, Tiles.Space);
+
+       let newTarget = document.getElementById(anotherCods);
+
+       newTarget.classList.replace(Tiles.Space, Entities.Block);
+
+       divTarget.classList.replace(Entities.Block, Entities.Character);
+
+       // alert("Where the block should be: " + anotherCods);
+    }
+    else if(divTarget.classList.contains(Entities.Block)){
+        // alert("Block to the left")
+
+        let anotherCods = targetX + "," + (Math.floor(targetY) + Math.floor(1));
+
+        //divTarget.classList.replace(Entities.Block, Tiles.Space);
+
+        let newTarget = document.getElementById(anotherCods);
+
+        newTarget.classList.replace(Tiles.Space, Entities.Block);
+
+        divTarget.classList.replace(Entities.Block, Entities.Character);
+
+        // alert("Where the block should be: " + anotherCods);
+    }
+
+    } 
+
+
+    // Old pos
+    //alert("Current pos: " + currentPlayerPos + "Upper: " + getUpperCoords + ". Lower: " + getLowerCoords + ". Left: " + getLeftCoords + ". Right: " + getRightCoords);
    
-
-
-}
-
-function MoveUp(x, y){}
-
-function MoveDown(x, y){}
-
-function MoveLeft(x, y){}
-
-function MoveRight(x, y){}
-
-function Build(){
-
+    // New position
+    //alert(div.id);
+   
 
 
 }
@@ -129,6 +243,8 @@ function CheckPossibleMove(){};
 // Detect a key press by showing an alert message.
 
 document.addEventListener("keydown", (event) => {
+
+    event.preventDefault();
     if (event.isComposing || event.key === 229) {
       return;
     }
