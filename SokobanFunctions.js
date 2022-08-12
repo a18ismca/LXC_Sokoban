@@ -60,53 +60,18 @@ function movePlayer(direction){
 
     let yOffset = 0;
 
+    let blocksInGoal = 0;
+
     // leta efter playerns plats
 
     let div = document.getElementsByClassName(Entities.Character)[0];
 
-
-   
     let currentPlayerPos = div.id;
 
 
     // Nuvarande position
     let getCoords = currentPlayerPos.split(",");
 
-    /* Övre granne
-
-    let getUpperX = getCoords[0];
-
-    let getUpperY = Math.floor(getCoords[1]) - 1;
-
-    let getUpperCoords = getUpperX + "," + getUpperY;
-
-    // Nedre granne
-
-    let getLowerX = getCoords[0];
-
-    let getLowerY = Math.floor(getCoords[1]) + Math.floor(1);
-
-    let getLowerCoords = getLowerX + "," + getLowerY;
-
-
-    // Vänster granne
-
-    let getLeftX = getCoords[0] - 1;
-
-    let getLeftY = getCoords[1];
-
-    let getLeftCoords = getLeftX + "," + getLeftY;
-
-    // Höger granne
-    
-    let getRightX = Math.floor(getCoords[0]) + Math.floor(1);
-
-    let getRightY = getCoords[1]
-
-    let getRightCoords = getRightX + "," + getRightY; */
-
-
-   
     if(direction == "ArrowLeft"){
         xOffset = -1;
     } 
@@ -122,11 +87,6 @@ function movePlayer(direction){
     else if(direction == "ArrowDown"){
         yOffset += 1;
     }
-
-
-    /*if (getLeftCoords == Tiles.Wall || getRightCoords == Tiles.Wall || getUpperCoords == Tiles.Wall || getLowerCoords == Tiles.Wall){
-
-    }*/
 
 
     // Player coordinates where we movit next
@@ -147,7 +107,10 @@ function movePlayer(direction){
     if (divTarget.classList.contains(Tiles.Wall)){
         return;
     }
+
+    // ej ha villkoret här
     if (divTarget.classList.contains(Entities.Block)){
+
         let afterBoxDivX = Math.floor(getCoords[0]) + Math.floor(xOffset * 2);
 
         let afterBoxDivY = Math.floor(getCoords[1]) + Math.floor(yOffset * 2);
@@ -156,158 +119,78 @@ function movePlayer(direction){
 
         let afterBoxDiv = document.getElementById(afterBoxDivID);
 
-        if(afterBoxDiv.classList.contains(Entities.Block) || afterBoxDiv.classList.contains(Tiles.Wall)){
+        
+
+        if(afterBoxDiv.classList.contains(Entities.Block) || afterBoxDiv.classList.contains(Tiles.Wall) || afterBoxDiv.classList.contains(Entities.BlockDone)){
             return;
         } 
         
         else{
+
+            
+             // change color of the box to dark green if the neighbor is a goal
+
+        if(afterBoxDiv.classList.contains(Tiles.Goal)){
+
+           
+
             // move the box
+           
+            
+
+            afterBoxDiv.classList.add(Entities.BlockDone);
+
+            
+
+            blocksInGoal += 1;
+
+            
+        }
+            if(blocksInGoal == 6){
+                alert("Cestitam!")
+            }
+
+            // move the box
+
             divTarget.classList.remove(Entities.Block);
 
             afterBoxDiv.classList.add(Entities.Block);
 
+
+            // remove number of blocks in goal if the player moves the block outside of the goal
+            if(divTarget.classList.contains(Tiles.Goal)){
+
+                divTarget.classList.remove(Entities.BlockDone);
+
+                blocksInGoal--;
+
+            }
+            
         }
 
         
 
-    }
+        
+            
 
+        
+
+        
+    }
 
     div.classList.replace(Entities.Character, Tiles.Space);
 
     divTarget.classList.replace(Tiles.Space, Entities.Character);
-
-
-}
-
-
-    // CLASS LIST!
-    /*if (divTarget.classList.contains(Tiles.Wall)){
-
-        let movingBlockCods = (targetX - 1) + "," + targetY;
-
-        let checkBlockAfterBlock = (targetX - 2) + "," + targetY;
-
-        //alert("Block to the left: " + movingBlockCods);
-
-        //divTarget.classList.replace(Entities.Block, Tiles.Space);
-
-        let newTarget = document.getElementById(movingBlockCods);
-
-        let checkBlocksAround = document.getElementById(checkBlockAfterBlock);
-
-        if(newTarget.classList.contains(Entities.Block) || checkBlocksAround.classList.contains(Tiles.Wall)){
-            alert("You have two blocks to the left")
-        }
-        //if(!(newTarget.classList.contains(Entities.Block) && checkBlocksAround.classList.contains(Tiles.Wall))){
-        div.classList.replace(Entities.Character, Tiles.Space);
-
-        divTarget.classList.replace(Tiles.Space, Entities.Character);
-
-        
-
-
     
 
-    if(divTarget.classList.contains(Entities.Block) && xOffset == -1 && !(newTarget.classList.contains(Entities.Block) && checkBlocksAround.classList.contains(Tiles.Wall))){
-       
-        // alert("Block to the left")
-
-       
-
-        //divTarget.classList.replace(Entities.Block, Tiles.Space);
-
-        let newTarget = document.getElementById(movingBlockCods);
-
-        let checkBlocksAround = document.getElementById(checkBlockAfterBlock);
-
-        //if(!newTarget.classList.contains(Entities.Block)){
-            
-            newTarget.classList.replace(Tiles.Space, Entities.Block);
-         
-            divTarget.classList.replace(Entities.Block, Entities.Character);
-          //  }
-        }
-    //}
-
-        /*if(newTarget.classList.contains(Entities.Block)){
-    
-        } else{}
-*/
-
-        //if(!)
-        //newTarget.classList.replace(Tiles.Space, Entities.Block);
-
-        //divTarget.classList.replace(Entities.Block, Entities.Character);
-        
-        // alert("Where the block should be: " + anotherCods); 
-        
-    
-    
-    /*else if(divTarget.classList.contains(Entities.Block) && xOffset == 1){
-        // alert("Block to the left")
-
-        let anotherCods = (Math.floor(targetX) + Math.floor(1)) + "," + targetY;
-
-        let checkBlockAfterBlock = (Math.floor(targetX) + Math.floor(2)) + "," + targetY;
-
-        //divTarget.classList.replace(Entities.Block, Tiles.Space);
-
-        let newTarget = document.getElementById(anotherCods);
-
-        newTarget.classList.replace(Tiles.Space, Entities.Block);
-
-        divTarget.classList.replace(Entities.Block, Entities.Character);
-
-        // alert("Where the block should be: " + anotherCods);
-
-        
-    }
-    
-    else if(divTarget.classList.contains(Entities.Block) && yOffset == -1){
-       // alert("Block to the left")
-
-       let anotherCods = targetX + "," + (targetY - 1);
-
-       let checkBlockAfterBlock = targetX + "," + (targetY - 2);
-
-       //divTarget.classList.replace(Entities.Block, Tiles.Space);
-
-       let newTarget = document.getElementById(anotherCods);
-
-       newTarget.classList.replace(Tiles.Space, Entities.Block);
-
-       divTarget.classList.replace(Entities.Block, Entities.Character);
-
-       // alert("Where the block should be: " + anotherCods);
-    }
-    else if(divTarget.classList.contains(Entities.Block) && yOffset == 1){
-        // alert("Block to the left")
-
-        let anotherCods = targetX + "," + (Math.floor(targetY) + Math.floor(1));
-
-        let checkBlockAfterBlock = targetX + "," + (Math.floor(targetY) + Math.floor(2));
-
-        //divTarget.classList.replace(Entities.Block, Tiles.Space);
-
-        let newTarget = document.getElementById(anotherCods);
-
-        newTarget.classList.replace(Tiles.Space, Entities.Block);
-
-        divTarget.classList.replace(Entities.Block, Entities.Character);
-
-        // alert("Where the block should be: " + anotherCods);
     }
 
-    } */
+    
+  
+    //div.classList.replace(Entities.Character, Tiles.Space);
 
-
-    // Old pos
-    //alert("Current pos: " + currentPlayerPos + "Upper: " + getUpperCoords + ". Lower: " + getLowerCoords + ". Left: " + getLeftCoords + ". Right: " + getRightCoords);
-   
-    // New position
-    //alert(div.id);
-   
+    //divTarget.classList.replace(Tiles.Space, Entities.Character);
+    
 
 
 
