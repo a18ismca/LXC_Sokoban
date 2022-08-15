@@ -1,9 +1,12 @@
 
+let blocksInGoal = 0;
 
 const drawMap = () => {
 
     document.getElementById("game-map").innerHTML = " ";
 
+
+    // tileMap01
     for(let y = 0; y < tileMap01.mapGrid.length; y++){
 
         const row = tileMap01.mapGrid[y]
@@ -60,7 +63,7 @@ function movePlayer(direction){
 
     let yOffset = 0;
 
-    let blocksInGoal = 0;
+    
 
     // leta efter playerns plats
 
@@ -137,18 +140,39 @@ function movePlayer(direction){
             // move the box
            
             
-
+            
+            
+            //alert("A block has been added to goal.")
             afterBoxDiv.classList.add(Entities.BlockDone);
 
             
-
-            blocksInGoal += 1;
+            let numOfGoalBlocks = document.getElementsByClassName('entity-block-goal').length;
+          
 
             
-        }
-            if(blocksInGoal == 6){
-                alert("Cestitam!")
+
+            if(document.getElementsByClassName('entity-block').length == numOfGoalBlocks){
+
+                alert("Finished!");
+
+                const gameMap = document.getElementById("game-map");
+
+                gameMap.remove();
+
+
+                // Allow the player restart the game... (unfinished section)
+                var contDiv = document.createElement('div');
+
+                document.body.appendChild(contDiv);
+
+
+
+             
             }
+            
+            
+        }
+            
 
             // move the box
 
